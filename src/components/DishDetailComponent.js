@@ -12,24 +12,25 @@ class DishDetail extends Component{
                       <CardText>{dish.description}</CardText>
                     </CardBody>
                 </Card>
-            );
+            )
         else
             return(
                 <div></div>
-            );
+            )
     }
 
-    renderComments(comments){
-            if (comments != null) {
+    renderComments(dish){
+            if (dish != null) {
                 let options = { year: "numeric", month: "short", day: "numeric" };
-                return comments.map(comment => (
-                  <ul key={comment.id} className="list-unstyled">
-                    <li className="mb-2">{comment.comment}</li>
-                    <li>
-                      -- {comment.author}{" "}
-                      {new Date(comment.date).toLocaleDateString("en-US", options)}
-                    </li>
-                  </ul>
+                return dish.comments.map(comment => (
+                    <ul key={comment.id} className="list-unstyled">
+                        <li className="mb-2">{comment.comment}</li>
+                        <li>
+                        -- {comment.author}{" "}
+                        {new Intl.DateTimeFormat('en-US',options).format(new Date(Date.parse(comment.date)))}
+                        {/* {new Date(comment.date).toLocaleDateString("en-US", options)} */}
+                        </li>
+                    </ul>
                 ));
               } else return <div />;
     }
@@ -41,11 +42,11 @@ class DishDetail extends Component{
                     {this.renderDish(this.props.dish)}
                 </div>
                 <div className="col-12 col-md-5 m-1">
-                    <h4>Comments</h4>
-                    {this.renderComments(this.props.dish.comments)}
+                    {(this.props.dish!=null)?<h4>Comments</h4>:null}
+                    {this.renderComments(this.props.dish)}
                 </div>
             </div>
-        );
+        )
     }
 }
 
