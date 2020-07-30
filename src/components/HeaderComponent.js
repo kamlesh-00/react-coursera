@@ -1,13 +1,55 @@
-import React from 'react';
-import {Navbar,NavbarBrand,Jumbotron} from 'reactstrap';
+import React, { Component } from 'react';
+import {Nav,Navbar,NavbarBrand,Jumbotron, NavItem, NavbarToggler} from 'reactstrap';
+import {Collapse} from 'reactstrap';
+import {Link} from 'react-router-dom';
 
-function Header(props){
-    return(
+class Header extends Component{
+    
+    constructor(props){
+        super(props);
+        this.state={
+            isNavOpen: false
+        };
+        this.toggleNav = this.toggleNav.bind(this);
+    }
+
+    toggleNav(){
+        this.setState({
+            isNavOpen: !this.state.isNavOpen
+        });
+    }
+    
+    render(){
+        return(
         <React.Fragment>
-            <Navbar dark color="purple">
+            <Navbar dark expand="md">
                 <div className="container">
-                <NavbarBrand href="/">Ristorante Con Fusion</NavbarBrand>
-                </div>
+                    <NavbarToggler onClick={this.toggleNav} />
+                    <NavbarBrand className="mr-auto" href="/">
+                        <img src="assets/images/logo.png" height="30" width="41" alt="Restorante Con Fusion" />
+                    </NavbarBrand>
+                    <Collapse isOpen={this.state.isNavOpen} navbar>
+                    <Nav navbar>
+                        <NavItem>
+                            {/* Here when instead of Link we use NavLink from reactstrap 'to' attribute do not work */}
+                            <Link to="/home" className="nav-link">
+                                <span className="fa fa-home fa-lg" /> Home</Link>
+                        </NavItem>
+                        <NavItem>
+                            <Link to="/aboutus" className="nav-link">
+                                <span className="fa fa-info fa-lg" /> About Us</Link>
+                        </NavItem>
+                        <NavItem>
+                            <Link to="/menu" className="nav-link">
+                                <span className="fa fa-list fa-lg" /> Menu</Link>
+                        </NavItem>
+                        <NavItem>
+                            <Link to="/contactus" className="nav-link">
+                                <span className="fa fa-address-card fa-lg" /> Contact Us</Link>
+                        </NavItem>
+                    </Nav>
+                    </Collapse>
+                </div>    
             </Navbar>
             <Jumbotron>
                 <div className="container">
@@ -21,6 +63,7 @@ function Header(props){
             </Jumbotron>
         </React.Fragment>
     )
+    }
 }
 
 export default Header;
