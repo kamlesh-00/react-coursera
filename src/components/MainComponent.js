@@ -13,6 +13,8 @@ import Home from './HomeComponent';
 import Contact from './ContactComponent';
 import {Switch,Route,Redirect} from 'react-router-dom';
 
+import About from './AboutComponent';
+
 class Main extends Component {
   constructor(props){
     super(props);
@@ -52,6 +54,12 @@ class Main extends Component {
       )
     }
 
+    const AboutUs = ()=>{
+      return(
+        <About leaders={this.state.leaders}/>
+      )
+    }
+
     return (
     <div>
       <Header />
@@ -61,6 +69,7 @@ class Main extends Component {
           <Route exact path='/menu' component={MenuPage} />
           <Route path="/menu/:dishId" component={DishWithId}/>
           <Route exact path='/contactus' component={Contact} />
+          <Route exact path='/aboutus' component={AboutUs} />
           <Redirect to='/home'/>
         </Switch>
         </div>
