@@ -11,7 +11,6 @@ import {Switch,Route,Redirect} from 'react-router-dom';
 import About from './AboutComponent';
 
 import {connect} from 'react-redux';
-import { DISHES } from '../shared/dishes';
 const mapStateToProps = state=>{
     return{
       dishes:state.dishes,
