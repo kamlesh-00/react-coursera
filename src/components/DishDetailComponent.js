@@ -25,9 +25,8 @@ class CommentForm extends Component{
     }
 
     handleSubmit(value){
-        console.log("The current state is "+JSON.stringify(value));
-        alert("The current state is "+JSON.stringify(value));
         this.toggleModal();
+        this.props.addComment(this.props.dishId,value.rating,value.author,value.comment);
     }
 
     render(){
@@ -56,13 +55,13 @@ class CommentForm extends Component{
                         <FormGroup row>
                             <Label htmlFor="name" className="col-12">Your name</Label>
                             <Col md={12}>
-                            <Control.text model=".name" name="name" id="name" md={10}
+                            <Control.text model=".author" name="author" id="author" md={10}
                                 className="form-control" placeholder="Your name"
                                 validators={{
                                     required,minLength: minLength(3), maxLength: maxLength(15)
                                 }} />
                             <Errors className="text-danger" 
-                                model=".name"
+                                model=".author"
                                 show="touched"
                                 messages={{
                                     required: 'Required',
@@ -89,7 +88,7 @@ class CommentForm extends Component{
     }
 }
 
-function RenderComments({comment}){
+function RenderComments({comment,addComment,dishId}){
     if (comment != null) {
         let options = { year: "numeric", month: "short", day: "numeric" };
         const comments = comment.map(comment => (
@@ -104,7 +103,7 @@ function RenderComments({comment}){
         ));
         return (<div>
                 {comments}
-                <CommentForm />
+                <CommentForm dishId={dishId} addComment={addComment} />
             </div>
         )
       } else return <div />;
@@ -141,7 +140,8 @@ function DishDetail(props){
             </div>
             <div className="col-12 col-md-5 m-1">
                 {(props.dish!=null)?<h4>Comments</h4>:null}
-                <RenderComments comment={props.comment} />
+                <RenderComments comment={props.comment} addComment={props.addComment}
+                    dishId={props.dish.id} />
             </div>
         </div>
         </React.Fragment>
