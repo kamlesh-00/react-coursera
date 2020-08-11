@@ -2,10 +2,11 @@ import React from 'react';
 // import { Media } from 'reactstrap';
 import {Card,CardImg,CardImgOverlay,CardTitle, Breadcrumb, BreadcrumbItem} from 'reactstrap';
 import {Link} from 'react-router-dom';
+import { Loading } from './LoadingComponent';
 
 function Menu(props) {
 
-  const menu = props.dishes.map((dish) => {
+  const menu = props.dishes.dishes.map((dish) => {
     return (
       <div  className="col-12 col-md-5 m-1" key={dish.id}>
         <Card>
@@ -20,6 +21,15 @@ function Menu(props) {
     );
   });
 
+  if(props.dishes.isLoading){
+    return (
+      <Loading />
+    );
+  }else if(props.dishes.err){
+    return(
+      <h4>{props.dishes.err}</h4>
+    );
+  }else{
   return (
     <React.Fragment>
     <div className="row">
@@ -37,6 +47,7 @@ function Menu(props) {
     </div>
     </React.Fragment>
   );
+  }
 }
 
 export default Menu;

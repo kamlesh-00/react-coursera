@@ -3,6 +3,7 @@ import {Card,CardImg,CardText,CardTitle,CardBody, Breadcrumb, BreadcrumbItem} fr
 import {Link} from 'react-router-dom';
 import {Button, ModalHeader, ModalBody, Modal, FormGroup, Label, Col} from 'reactstrap';
 import {Control, LocalForm, Errors} from 'react-redux-form';
+import { Loading } from './LoadingComponent';
 
 const required = (val)=>val && val.length;
 const maxLength = (len)=>(val)=>!(val) || (val.length<=len);
@@ -124,7 +125,24 @@ function RenderDish({dish}) {
 }
 
 function DishDetail(props){
-    
+    if(props.isLoading){
+        return(
+            <div className='container'>
+                <div className='row'>
+                    <Loading />
+                </div>
+            </div>
+        );
+    }else if(props.errMess){
+        return(
+            <div className='container'>
+                <div className='row'>
+                    <h4>{props.errMess}</h4>
+                </div>
+            </div>
+        );
+    }
+    else if(props.dish!=null)
     return(
         <React.Fragment>
         <div className="row">
